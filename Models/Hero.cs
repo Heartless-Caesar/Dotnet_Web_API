@@ -1,4 +1,4 @@
-namespace MyWebAPI;
+namespace MyWebAPI.Models;
 
 public class Hero
 {
