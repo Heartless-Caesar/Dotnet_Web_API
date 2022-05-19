@@ -3,7 +3,7 @@ using MyWebAPI.Models;
 
 namespace MyWebAPI.Controllers;
 
-[Route("api/[controller]/{id:int}")]
+[Route("api/[controller]/{id}")]
 [ApiController]
 public class HeroController : ControllerBase
 {
