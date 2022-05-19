@@ -3,7 +3,7 @@ using MyWebAPI.Models;
 
 namespace MyWebAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/{id:int}")]
 [ApiController]
 public class HeroController : ControllerBase
 {
@@ -34,11 +34,11 @@ public class HeroController : ControllerBase
     }
     
     //GET single hero
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Hero>> GetHero(int? id)
     {
         var hero = heroes.Find(x => x.Id == id);
-            if (hero == NULL) return BadRequest("Hero not found");
+            if (hero == null) return BadRequest("Hero not found");
         return Ok(hero);
     }
     
@@ -56,7 +56,7 @@ public class HeroController : ControllerBase
     public async Task<ActionResult<Hero>> UpdateHero(Hero req)
     {
         var hero = heroes.Find(x => x.Id == req.Id);
-        if (hero == NULL) return BadRequest("Hero not found");
+        if (hero == null) return BadRequest("Hero not found");
 
         hero.FirstName = req.FirstName;
         hero.LastName = req.LastName;
@@ -66,11 +66,11 @@ public class HeroController : ControllerBase
     }
     
     //Delete single hero
-    [HttpDelete("{id}")]
+    [HttpDelete("")]
     public async Task<ActionResult<Hero>> DeleteHero(int? id)
     {
         var hero = heroes.Find(x => x.Id == id);
-        if (hero == NULL) return BadRequest("Hero not found");
+        if (hero == null) return BadRequest("Hero not found");
 
         heroes.Remove(hero);
 
