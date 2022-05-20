@@ -1,12 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using MyWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using MyWebAPI.Data;
 
 namespace MyWebAPI.Controllers;
 
-[Route("api/[controller]/{id}")]
+[Route("api/[controller]")]
 [ApiController]
 public class HeroController : ControllerBase
 {
+    private readonly DbContext _context;
+    
     //Default example value
     private static List<Hero> heroes = new List<Hero>
     {
@@ -25,16 +29,22 @@ public class HeroController : ControllerBase
                 
         }
     };
+
+    public HeroController(DbContext context)
+    {
+        _context = context;
+    }
     
     //GET entire hero list
     [HttpGet]
     public async Task<ActionResult<List<Hero>>> GetHero()
     {
+        
         return Ok(heroes);
     }
     
     //GET single hero
-    [HttpGet("{id:int}")]
+    [HttpGet("/api/Hero/{id}")]
     public async Task<ActionResult<Hero>> GetHero(int? id)
     {
         var hero = heroes.Find(x => x.Id == id);
@@ -66,7 +76,7 @@ public class HeroController : ControllerBase
     }
     
     //Delete single hero
-    [HttpDelete("")]
+    [HttpDelete("/api/Hero/{id}")]
     public async Task<ActionResult<Hero>> DeleteHero(int? id)
     {
         var hero = heroes.Find(x => x.Id == id);
