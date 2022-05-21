@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MyWebAPI.Models;
 
 public class Hero
 {
+    [Key]
     public int Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
 

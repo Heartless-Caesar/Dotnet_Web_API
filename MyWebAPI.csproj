@@ -21,6 +21,14 @@
   <ItemGroup>
     <Compile Remove="WeatherForecast.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
+    <Compile Remove="Migrations\20220520121801_SecondMigration.cs" />
+    <Compile Remove="Migrations\20220520121801_SecondMigration.Designer.cs" />
+    <Compile Remove="Migrations\20220520131607_InitialMigration.cs" />
+    <Compile Remove="Migrations\20220520131607_InitialMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations" />
   </ItemGroup>
 
 </Project>

@@ -11,8 +11,8 @@ using MyWebAPI.Data;
 namespace MyWebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220519125319_InitialMigratrion")]
-    partial class InitialMigratrion
+    [Migration("20220521002742_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

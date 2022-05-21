@@ -30,7 +30,7 @@ public class HeroController : ControllerBase
         }
     };
 
-    public HeroController(DbContext context)
+    public HeroController(AppDbContext context)
     {
         _context = context;
     }
