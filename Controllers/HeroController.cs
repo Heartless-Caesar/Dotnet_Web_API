@@ -25,7 +25,7 @@ public class HeroController : ControllerBase
     
     //GET single hero
     [HttpGet("/api/Hero/{id}")]
-    public async Task<ActionResult<Hero>> GetHero(int? id)
+    public async Task<ActionResult<Hero>> GetHero(int id)
     {
         var singleHero = await _context.Heroes.FindAsync(id);
         
@@ -48,26 +48,31 @@ public class HeroController : ControllerBase
     [HttpPut]
     public async Task<ActionResult<Hero>> UpdateHero(Hero req)
     {
-        
-        /*if (hero == null) return BadRequest("Hero not found");
+        var hero = await _context.Heroes.FindAsync(req.Id);
+        if (hero == null) return BadRequest("Element not found");
 
         hero.FirstName = req.FirstName;
         hero.LastName = req.LastName;
-        hero.Power = req.Power;*/
+        hero.Power = req.Power;
 
-        return Ok();
+        await _context.SaveChangesAsync();
+        
+        var updatedList = await _context.Heroes.ToListAsync();
+        
+        return Ok(updatedList);
     }
     
     //Delete single hero
     [HttpDelete("/api/Hero/{id}")]
     public async Task<ActionResult<Hero>> DeleteHero(int? id)
     {
-        /*var hero = heroes.Find(x => x.Id == id);
-        if (hero == null) return BadRequest("Hero not found");
+        var hero = await _context.Heroes.FindAsync(id);
+        if (hero == null) return BadRequest("There is no element with id of {id}");
 
-        heroes.Remove(hero);*/
-
-        return Ok();
+        _context.Heroes.Remove(hero);
+        await _context.SaveChangesAsync();
+        
+        return Ok("Element deleted");
     }
     
 }
