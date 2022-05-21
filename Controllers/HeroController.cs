@@ -9,82 +9,65 @@ namespace MyWebAPI.Controllers;
 [ApiController]
 public class HeroController : ControllerBase
 {
-    private readonly DbContext _context;
-    
-    //Default example value
-    private static List<Hero> heroes = new List<Hero>
+    private readonly AppDbContext _context;
+    public HeroController(AppDbContext dbContext)
     {
-        new Hero { 
-            Id = 1,
-            FirstName = "Luthor",
-            LastName = "Strode",
-            Power = "Strength"
-                
-        },
-        new Hero { 
-            Id = 2,
-            FirstName = "Mark",
-            LastName = "Thatch",
-            Power = "Acute Reflexes"
-                
-        }
-    };
-
-    public HeroController(AppDbContext context)
-    {
-        _context = context;
+        _context = dbContext;
     }
     
     //GET entire hero list
     [HttpGet]
     public async Task<ActionResult<List<Hero>>> GetHero()
     {
-        
-        return Ok(heroes);
+        var fullList = await _context.Heroes.ToListAsync();
+        return Ok(fullList);
     }
     
     //GET single hero
     [HttpGet("/api/Hero/{id}")]
     public async Task<ActionResult<Hero>> GetHero(int? id)
     {
-        var hero = heroes.Find(x => x.Id == id);
-            if (hero == null) return BadRequest("Hero not found");
-        return Ok(hero);
+        var singleHero = await _context.Heroes.FindAsync(id);
+        
+        if (singleHero == null) return BadRequest("No element with id of {id}");
+        
+        return Ok(singleHero);
     }
     
     //POST single hero
-    [HttpPost]
+    [HttpPost("/api/Hero")]
     public async Task<ActionResult<List<Hero>>> AddHero(Hero obj)
     {
-        heroes.Add(obj);
-      
-        return Ok(heroes);
+        _context.Heroes.Add(obj);
+        await _context.SaveChangesAsync();
+        var updatedList = await _context.Heroes.ToListAsync();
+        return Ok(updatedList);
     }
     
     //Update single hero
     [HttpPut]
     public async Task<ActionResult<Hero>> UpdateHero(Hero req)
     {
-        var hero = heroes.Find(x => x.Id == req.Id);
-        if (hero == null) return BadRequest("Hero not found");
+        
+        /*if (hero == null) return BadRequest("Hero not found");
 
         hero.FirstName = req.FirstName;
         hero.LastName = req.LastName;
-        hero.Power = req.Power;
+        hero.Power = req.Power;*/
 
-        return Ok(heroes);
+        return Ok();
     }
     
     //Delete single hero
     [HttpDelete("/api/Hero/{id}")]
     public async Task<ActionResult<Hero>> DeleteHero(int? id)
     {
-        var hero = heroes.Find(x => x.Id == id);
+        /*var hero = heroes.Find(x => x.Id == id);
         if (hero == null) return BadRequest("Hero not found");
 
-        heroes.Remove(hero);
+        heroes.Remove(hero);*/
 
-        return Ok(heroes);
+        return Ok();
     }
     
 }
